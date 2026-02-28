@@ -38,9 +38,9 @@ class ProcessingPipeline(ABC):
         )
         self.stats["pipeline_id"] = pipeline_id
         self.stats["processed"] = 0
-        self._setup_stages()
+        self.setup_stages()
 
-    def _setup_stages(self) -> None:
+    def setup_stages(self) -> None:
         self.stages = [
             InputStage(), TransformStage(), OutputStage()
         ]
