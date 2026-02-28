@@ -41,9 +41,6 @@ class ProcessingPipeline(ABC):
         self.stats["pipeline_id"] = pipeline_id
         self.stats["processed"] = 0
 
-    def add_stage(self, stage: ProcessingStage) -> None:
-        self.stages.append(stage)
-
     @abstractmethod
     def process(self, data: Any) -> Union[str, Any]:
         pass
