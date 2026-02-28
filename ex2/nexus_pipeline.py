@@ -32,18 +32,14 @@ class OutputStage:
 class ProcessingPipeline(ABC):
     def __init__(self, pipeline_id: str) -> None:
         self.pipeline_id: str = pipeline_id
-        self.stages: List[ProcessingStage] = []
+        self.stages: List[ProcessingStage] = [
+            InputStage(), TransformStage(), OutputStage()
+        ]
         self.stats: Dict[str, Union[str, int, float]] = (
             collections.OrderedDict()
         )
         self.stats["pipeline_id"] = pipeline_id
         self.stats["processed"] = 0
-        self.setup_stages()
-
-    def setup_stages(self) -> None:
-        self.stages = [
-            InputStage(), TransformStage(), OutputStage()
-        ]
 
     def add_stage(self, stage: ProcessingStage) -> None:
         self.stages.append(stage)
