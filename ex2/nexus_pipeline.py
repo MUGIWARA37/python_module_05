@@ -1,27 +1,31 @@
 import collections
 from abc import ABC, abstractmethod
-from typing import Any, Dict, List, Optional, Union
-from typing import Protocol, runtime_checkable
+from typing import Any, Dict, List, Optional, Union, Protocol
 
 
-@runtime_checkable
 class ProcessingStage(Protocol):
     def process(self, data: Any) -> Any:
         ...
 
 
 class InputStage:
-    def process(self, data: Any) -> Any:
-        return data
+    def process(self, data: Any) -> Dict[str, Any]:
+        return {"raw": data, "status": "parsed"}
 
 
 class TransformStage:
-    def process(self, data: Any) -> Any:
-        return data
+    def process(self, data: Any) -> Dict[str, Any]:
+        if isinstance(data, dict):
+            data["transformed"] = True
+            data["status"] = "enriched"
+            return data
+        return {"raw": data, "transformed": True, "status": "enriched"}
 
 
 class OutputStage:
     def process(self, data: Any) -> str:
+        if isinstance(data, dict):
+            return str(data.get("raw", data))
         return str(data)
 
 
@@ -55,7 +59,7 @@ class JSONAdapter(ProcessingPipeline):
 
     def process(self, data: Any) -> Union[str, Any]:
         try:
-            result = data
+            result: Any = data
             for stage in self.stages:
                 result = stage.process(result)
             self.stats["processed"] = (
@@ -74,7 +78,7 @@ class CSVAdapter(ProcessingPipeline):
 
     def process(self, data: Any) -> Union[str, Any]:
         try:
-            result = data
+            result: Any = data
             for stage in self.stages:
                 result = stage.process(result)
             self.stats["processed"] = (
@@ -91,7 +95,7 @@ class StreamAdapter(ProcessingPipeline):
 
     def process(self, data: Any) -> Union[str, Any]:
         try:
-            result = data
+            result: Any = data
             for stage in self.stages:
                 result = stage.process(result)
             self.stats["processed"] = (
