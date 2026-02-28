@@ -34,7 +34,7 @@ class ProcessingPipeline(ABC):
         self.pipeline_id: str = pipeline_id
         self.stages: List[ProcessingStage] = [
             InputStage(), TransformStage(), OutputStage()
-        ]
+                                              ]
         self.stats: Dict[str, Union[str, int, float]] = (
             collections.OrderedDict()
         )
