@@ -105,7 +105,7 @@ class NexusManager:
         self.total_processed: int = 0
 
     def add_pipeline(self, pipeline: ProcessingPipeline) -> None:
-        self.pipelines.append(pipeline)
+        self.pipelines += [pipeline]
 
     def process_data(
         self, pipeline: ProcessingPipeline, data: Any
