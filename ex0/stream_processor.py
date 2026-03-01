@@ -4,7 +4,7 @@ from typing import Any, List, Dict, Union, Optional
 
 class DataProcessor(ABC):
     def __init__(self) -> None:
-        self.processed_count: int = 0
+        self.processed_count = 0
 
     @abstractmethod
     def process(self, data: Any) -> str:
