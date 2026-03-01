@@ -23,6 +23,8 @@ class NumericProcessor(DataProcessor):
         super().__init__()
 
     def validate(self, data: Any) -> bool:
+        if isinstance(data, (int, float)):
+            return True
         if not isinstance(data, list):
             return False
         return all(isinstance(item, (int, float)) for item in data)
@@ -31,6 +33,8 @@ class NumericProcessor(DataProcessor):
         try:
             if not self.validate(data):
                 raise ValueError("Invalid numeric data")
+            if isinstance(data, (int, float)):
+                data = [data]
             total = sum(data)
             avg = total / len(data)
             self.processed_count += len(data)
@@ -149,4 +153,11 @@ if __name__ == "__main__":
     ]
     demo_polymorphic(processors, demo_data)
 
-    print("\nFoundation systems online. Nexus ready for advanced streams.")
+    print("\n=== Single Value Demo ===")
+    numeric2 = NumericProcessor()
+    print(numeric2.format_output(numeric2.process(42)))
+    print(numeric2.format_output(numeric2.process(3.14)))
+
+    print(
+        "\nFoundation systems online. Nexus ready for advanced streams."
+    )
