@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
 from typing import Any, List, Dict, Union, Protocol
-from collections import deque
 import time
 
 
@@ -97,7 +96,7 @@ class CSVAdapter(ProcessingPipeline):
 class StreamAdapter(ProcessingPipeline):
     def process(self, data: Any) -> Union[str, Any]:
         try:
-            stream_buffer: deque = deque([21.8, 22.3, 22.0, 22.5, 21.9])
+            stream_buffer: List[float] = [21.8, 22.3, 22.0, 22.5, 21.9]
             avg: float = sum(stream_buffer) / len(stream_buffer)
 
             structured: Dict[str, Any] = {
@@ -197,7 +196,7 @@ def main() -> None:
 
     print("\nChain result: 100 records processed through 3-stage pipeline")
     print(f"Performance: 95% efficiency, "
-          f"{round(duration, 1)}s total processing time")
+          f"{duration:.5f}s total processing time")
 
     print("\n=== Error Recovery Test ===")
     print("Simulating pipeline failure...")
