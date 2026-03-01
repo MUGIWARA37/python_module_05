@@ -95,10 +95,8 @@ class LogProcessor(DataProcessor):
         return f"Output: {result}"
 
 
-def demo_polymorphic(
-    processors: List[DataProcessor],
-    data_items: List[Any]
-) -> None:
+def demo_polymorphic(processors: List[DataProcessor], data_items: List[Any]
+                     ) -> None:
     print("Processing multiple data types through same interface...")
     for i, (processor, data) in enumerate(
         zip(processors, data_items), start=1
@@ -107,9 +105,8 @@ def demo_polymorphic(
         print(f"Result {i}: {result}")
 
 
-def get_stats(
-    processors: List[DataProcessor]
-) -> Dict[str, Union[str, int, float]]:
+def get_stats(processors: List[DataProcessor]
+              ) -> Dict[str, Union[str, int, float]]:
     return {
         "total_processors": len(processors),
         "total_processed": sum(p.processed_count for p in processors)
