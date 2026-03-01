@@ -100,7 +100,7 @@ class StreamAdapter(ProcessingPipeline):
             avg: float = sum(stream_buffer) / len(stream_buffer)
 
             structured: Dict[str, Any] = {
-                "readings": list(stream_buffer),
+                "readings": stream_buffer,
                 "average": round(avg, 1)
             }
 
